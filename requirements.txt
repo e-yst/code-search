@@ -1,0 +1,5 @@
+aiofiles
+elasticsearch[async]
+ipykernel
+jupyterlab
+tqdm
