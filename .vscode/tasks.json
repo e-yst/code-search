@@ -1,0 +1,21 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "quasar: dev",
+      "type": "process",
+      "command": "quasar",
+      "args": [
+        "dev"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/frontend",
+        "env": {
+          "ES_BASE_URL": "http://10.147.1.110:9200"
+        }
+      }
+    }
+  ]
+}
