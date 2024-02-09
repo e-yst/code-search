@@ -84,7 +84,7 @@ async def gen_es_doc(f: Path, repos_dir: Path) -> str:
     async with SEM:
         doc = {
             "_index": "code_search",
-            "suffix": f.suffix.lower(),
+            "suffix": f.suffix.lower().removeprefix("."),
             "namespace": "/".join(f.relative_to(repos_dir).parts[:2]),
             "path": "/".join(f.relative_to(repos_dir).parts[2:]),
             "repo_name": f.relative_to(repos_dir).parts[1],

@@ -15,5 +15,8 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "i18n-ally.localesPaths": [
     "frontend/src/i18n"
-  ]
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  }
 }
