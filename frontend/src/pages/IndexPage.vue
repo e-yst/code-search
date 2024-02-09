@@ -55,7 +55,7 @@
         :key="file.id"
         class="q-ma-md row justify-center"
       >
-        <q-card class="" style="margin: auto; min-width: 60%">
+        <q-card bordered flat style="margin: auto; min-width: 70%">
           <q-card-section class="row q-gutter-md items-center justify-start">
             <div class="text-h6 text-bold">{{ file.file_name }}</div>
             <div>{{ file.namespace }}</div>
@@ -63,23 +63,14 @@
           </q-card-section>
 
           <q-card-section class="row justify-center">
-            <!-- <ssh-pre
-              :language="getLang(file.suffix)"
-              style="
-                min-width: 80rem;
-                max-width: 80rem;
-                max-height: 60rem;
-                width: 50%;
-                overflow: scroll;
-              "
-            >
-              {{ file.raw.substring(0, 5000) }}
-            </ssh-pre> -->
             <HighCode
               ref="H"
-              :code-value="file.raw"
+              :code-value="
+                file.raw.length > 1000
+                  ? file.raw.substring(0, 1000) + '...'
+                  : file.raw
+              "
               font-size="16px"
-              :height="codeblockHeight"
               :lang="
                 file.suffix.includes('.')
                   ? file.suffix.substring(1)
@@ -110,8 +101,7 @@ const fileExts = ref([]);
 const fileExtsOpts = ref([]);
 
 const searchResults = ref([]);
-const codeblockHeight = ref('60rem');
-const codeblockWidth = ref('60rem');
+const codeblockWidth = ref('70rem');
 const H = ref(null);
 
 const filterFn = (val, update) => {
@@ -172,3 +162,9 @@ onMounted(async () => {
     .sort();
 });
 </script>
+
+<style lang="scss">
+pre code {
+  white-space: pre-wrap;
+}
+</style>
