@@ -134,6 +134,7 @@ def build_parser():
     parser.add_argument("repos_dir")
     parser.add_argument("--replace", action="store_true")
     parser.add_argument("--index-name", default="code_search")
+    parser.add_argument("--es-endpoint", default="http://localhost:9200")
     return parser
 
 
@@ -173,7 +174,7 @@ async def main():
     }
 
     start_t = perf_counter()
-    async with AsyncElasticsearch("http://localhost:9200", request_timeout=300) as es:
+    async with AsyncElasticsearch(args.es_endpoint, request_timeout=300) as es:
         index_name = args.index_name
         indices = await es.indices.get_alias(index="*")
         if index_name in indices.keys():
