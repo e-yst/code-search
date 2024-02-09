@@ -1,12 +1,28 @@
 <template>
   <q-card bordered flat>
-    <q-card-section class="row q-gutter-md items-center justify-start">
-      <div class="text-h6 text-bold">{{ file.file_name }}</div>
-      <div>{{ file.namespace }}</div>
-      <div>{{ file.path }}</div>
+    <q-card-section class="q-gutter-md items-center justify-start">
+      <div class="row items-center">
+        <div class="text-h6 text-bold">{{ file.file_name }}</div>
+        <q-space />
+        <q-btn
+          v-if="truncate"
+          class="q-ml-md"
+          dense
+          icon="sym_o_open_in_new"
+          outline
+          round
+          text-color="primary"
+          @click="emit('show-dialog', file)"
+        />
+      </div>
+      <div class="row">
+        <div class="text-bold">{{ file.namespace }}</div>
+        <div class="q-mx-sm">/</div>
+        <div>{{ file.path }}</div>
+      </div>
     </q-card-section>
 
-    <q-card-section class="row justify-center">
+    <q-card-section class="justify-center">
       <HighCode
         ref="H"
         :code-value="
@@ -51,5 +67,18 @@ withDefaults(defineProps<Props>(), {
   width: '70rem',
   maxWidth: undefined,
 });
+
+const emit = defineEmits<{
+  'show-dialog': [file: File];
+}>();
+
 const H = ref(null);
 </script>
+
+<style lang="scss">
+pre code {
+  white-space: pre-wrap;
+  max-width: 100%;
+  overflow: scroll;
+}
+</style>

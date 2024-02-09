@@ -55,14 +55,28 @@
         :key="file.id"
         class="q-ma-md row justify-center"
       >
-        <CodeblockCard :file="file" truncate />
+        <codeblock-card :file="file" truncate @show-dialog="showDialog" />
       </div>
     </div>
+
+    <q-dialog v-model="dialog.show">
+      <q-card style="max-width: 80rem">
+        <q-card-section>
+          <codeblock-card :file="dialog.file" :height="'65rem'" />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn v-close-popup color="primary" flat label="OK" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script setup lang="ts">
+import { File } from 'src/components/models';
 import { nextTick, onMounted } from 'vue';
+import { reactive } from 'vue';
 import { ref } from 'vue';
 import CodeblockCard from 'src/components/CodeblockCard.vue';
 
@@ -125,6 +139,16 @@ const submitQuery = async () => {
   await nextTick();
 };
 
+// dialog
+const dialog: { show: boolean; file: File | null } = reactive({
+  show: false,
+  file: null,
+});
+const showDialog = (file: File) => {
+  dialog.show = true;
+  dialog.file = file;
+};
+
 onMounted(async () => {
   const data = await queryEs({
     size: 0,
@@ -135,9 +159,3 @@ onMounted(async () => {
     .sort();
 });
 </script>
-
-<style lang="scss">
-pre code {
-  white-space: pre-wrap;
-}
-</style>
