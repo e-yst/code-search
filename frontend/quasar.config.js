@@ -55,7 +55,7 @@ module.exports = configure(function (/* ctx */) {
         node: 'node20',
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -64,7 +64,7 @@ module.exports = configure(function (/* ctx */) {
 
       // publicPath: '/',
       // analyze: true,
-      env: { ES_BASE_URL: process.env.ES_BASE_URL },
+      env: {},
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
@@ -97,7 +97,7 @@ module.exports = configure(function (/* ctx */) {
       // https: true
       open: false, // opens browser window automatically
       proxy: {
-        '/code_search/_search': 'http://10.147.1.110:9200',
+        // '/code_search/_search': 'http://eshost.example.com',
       },
     },
 
