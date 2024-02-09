@@ -12,9 +12,6 @@
       ],
       "options": {
         "cwd": "${workspaceFolder}/frontend",
-        "env": {
-          "ES_BASE_URL": "http://10.147.1.110:9200"
-        }
       }
     }
   ]
