@@ -55,33 +55,7 @@
         :key="file.id"
         class="q-ma-md row justify-center"
       >
-        <q-card bordered flat style="margin: auto; min-width: 70%">
-          <q-card-section class="row q-gutter-md items-center justify-start">
-            <div class="text-h6 text-bold">{{ file.file_name }}</div>
-            <div>{{ file.namespace }}</div>
-            <div>{{ file.path }}</div>
-          </q-card-section>
-
-          <q-card-section class="row justify-center">
-            <HighCode
-              ref="H"
-              :code-value="
-                file.raw.length > 1000
-                  ? file.raw.substring(0, 1000) + '...'
-                  : file.raw
-              "
-              font-size="16px"
-              :lang="
-                file.suffix.includes('.')
-                  ? file.suffix.substring(1)
-                  : file.suffix
-              "
-              :name-show="false"
-              :text-editor="true"
-              :width="codeblockWidth"
-            />
-          </q-card-section>
-        </q-card>
+        <CodeblockCard :file="file" truncate />
       </div>
     </div>
   </q-page>
@@ -90,9 +64,7 @@
 <script setup lang="ts">
 import { nextTick, onMounted } from 'vue';
 import { ref } from 'vue';
-
-import 'vue-highlight-code/dist/style.css';
-import { HighCode } from 'vue-highlight-code';
+import CodeblockCard from 'src/components/CodeblockCard.vue';
 
 const searchTxt = ref('');
 const selectFileExt = ref([]);
@@ -101,8 +73,6 @@ const fileExts = ref([]);
 const fileExtsOpts = ref([]);
 
 const searchResults = ref([]);
-const codeblockWidth = ref('70rem');
-const H = ref(null);
 
 const filterFn = (val, update) => {
   update(() => {
@@ -148,7 +118,10 @@ const submitQuery = async () => {
   const data = await queryEs(queryBody);
   searchResults.value = [];
   await nextTick();
-  searchResults.value = data.hits.hits.map((hit) => hit._source);
+  searchResults.value = data.hits.hits.map((hit) => {
+    hit._source.id = hit._id;
+    return hit._source;
+  });
   await nextTick();
 };
 

@@ -6,3 +6,11 @@ export interface Todo {
 export interface Meta {
   totalCount: number;
 }
+
+export interface File {
+  file_name: string;
+  namespace: string;
+  path: string;
+  raw: string;
+  suffix: string;
+}
