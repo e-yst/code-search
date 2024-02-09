@@ -98,7 +98,6 @@ module.exports = configure(function (/* ctx */) {
       open: false, // opens browser window automatically
       proxy: {
         // '/code_search/_search': 'http://eshost.example.com',
-        '/code_search/_search': 'http://10.147.1.110:9200',
       },
     },
 
